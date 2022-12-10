@@ -10,8 +10,12 @@ int main() {
 	int userChoice, amountOfElements, array[]{}, mixedArray[]{}, A, B;
 	int averageResult;
 
-	printf("Select the array fill mode:\nUser input(1)/Random fill(2)"); 
-	scanf("%d", &userChoice);
+	do {
+		printf("Select the array fill mode:\nUser input(1)/Random fill(2):"); 
+		scanf("%d", &userChoice);
+		if ((userChoice != 1)&&(userChoice != 2))
+			printf("Mode must satisfy (choice = 1 or choice = 2)\n");
+	}while((userChoice != 1)&&(userChoice != 2));
 
 	do {
 		printf("Amount of elements = ");	scanf("%d", &amountOfElements);
@@ -27,8 +31,12 @@ int main() {
 		elements_array_mixer(array, mixedArray, amountOfElements);
 	}
 	else {
-		printf("A = "); scanf("%d", &A);
-		printf("B = "); scanf("%d", &B);
+		do {
+			printf("A = "); scanf("%d", &A);
+			printf("B = "); scanf("%d", &B);
+			if (A > B) 
+				printf("A and B must satisfy (A<B)\n");
+		}while(A > B);
 
 		random_array_filler(array, A, B, amountOfElements);
 		elements_array_mixer(array, mixedArray, amountOfElements);
@@ -80,7 +88,7 @@ int random_array_filler(int array[], int boundA, int boundB, int amountOfElement
 
 int elements_array_mixer(int array[], int mixedArray[], int amountOfElements) {
 
-	for (int i = 0, j = 0; i <= amountOfElements; i++, j+=2) {
+	for (int i = 0, j = 0; i <= amountOfElements; i+=2, j+=2) {
 		mixedArray[j] = array[i+1];
 		mixedArray[j+1] = array[i];
 	}
@@ -95,14 +103,14 @@ int elements_array_mixer(int array[], int mixedArray[], int amountOfElements) {
 
 }
 
-double average(int mixedArray[], int amountOfElements) {
+double average(int array[], int amountOfElements) {
 
 	double sumAndAverage = 0;		
 	for (int i = 0; i <= amountOfElements; i++) {
-		sumAndAverage += mixedArray[i];
+		sumAndAverage += array[i];
 	}
 
-	sumAndAverage /= amountOfElements + 1;
+	sumAndAverage /= amountOfElements+1.0;
 
 	printf("Correct average\n");
 
