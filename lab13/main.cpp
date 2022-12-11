@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <ctime>
 
-double average(int mixedArray[], int amountOfElements); 
-int elements_array_mixer(int array[], int mixedArray[], int amountOfElements), user_array_filler(int array[], int amountOfElements), random_array_filler(int array[], int boundA, int boundB, int amountOfElements);
+double average(int array[], int amountOfElements); 
+int elements_array_mixer(int array[], int amountOfElements), user_array_filler(int array[], int amountOfElements), random_array_filler(int array[], int boundA, int boundB, int amountOfElements);
 
 int main() {
 
-	int userChoice, amountOfElements, array[]{}, mixedArray[]{}, A, B;
-	int averageResult;
+	int userChoice, amountOfElements, array[]{}, A, B;
+	double averageResult;
 
 	do {
 		printf("Select the array fill mode:\nUser input(1)/Random fill(2):"); 
@@ -28,7 +28,7 @@ int main() {
 
 	if (userChoice == 1) {
 		user_array_filler(array, amountOfElements);
-		elements_array_mixer(array, mixedArray, amountOfElements);
+		elements_array_mixer(array,amountOfElements);
 	}
 	else {
 		do {
@@ -39,14 +39,14 @@ int main() {
 		}while(A > B);
 
 		random_array_filler(array, A, B, amountOfElements);
-		elements_array_mixer(array, mixedArray, amountOfElements);
+		elements_array_mixer(array, amountOfElements);
 	}
 
-	averageResult = average(mixedArray, amountOfElements);
+	averageResult = average(array, amountOfElements);
 
 	printf("Correct main\n");
 
-	printf("result = %d\n", averageResult);
+	printf("result = %.3lf\n", averageResult);
 
 	printf("Finished\n");
 	
@@ -86,17 +86,19 @@ int random_array_filler(int array[], int boundA, int boundB, int amountOfElement
 
 }
 
-int elements_array_mixer(int array[], int mixedArray[], int amountOfElements) {
+int elements_array_mixer(int array[], int amountOfElements) {
 
-	for (int i = 0, j = 0; i <= amountOfElements; i+=2, j+=2) {
-		mixedArray[j] = array[i+1];
-		mixedArray[j+1] = array[i];
+	int element;
+	for (int i = 0; i < amountOfElements; i+=2) {
+		element = array[i];
+		array[i] = array[i+1];
+		array[i+1] = element;
 	}
 
 	printf("Correct mixer\n");
 
 	for (int i = 0; i <= amountOfElements; i++) {
-		printf("%d ", mixedArray[i]);
+		printf("%d ", array[i]);
 	}
 
 	return 0;	
@@ -110,7 +112,7 @@ double average(int array[], int amountOfElements) {
 		sumAndAverage += array[i];
 	}
 
-	sumAndAverage /= amountOfElements+1.0;
+	sumAndAverage /= (amountOfElements)+1;
 
 	printf("Correct average\n");
 
