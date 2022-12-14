@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <ctime>
 
+#define SIZE 100
+
 double average(int array[], int amountOfElements); 
 int elements_array_mixer(int array[], int amountOfElements), user_array_filler(int array[], int amountOfElements), random_array_filler(int array[], int boundA, int boundB, int amountOfElements);
 
 int main() {
 
-	int userChoice, amountOfElements, array[]{}, A, B;
+	int userChoice, amountOfElements, array[SIZE]{}, A, B;
 	double averageResult;
 
 	do {
@@ -44,12 +46,8 @@ int main() {
 
 	averageResult = average(array, amountOfElements);
 
-	printf("Correct main\n");
-
 	printf("result = %.3lf\n", averageResult);
 
-	printf("Finished\n");
-	
 	return 0;
 
 }
@@ -61,11 +59,11 @@ int user_array_filler(int array[], int amountOfElements) {
 		scanf("%d", &array[i]);
 	}
 
-	printf("Correct user\n");
-
 	for (int i = 0; i <= amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
+
+	printf("\n");
 
 	return 0;
 
@@ -76,11 +74,11 @@ int random_array_filler(int array[], int boundA, int boundB, int amountOfElement
 	for (int i = 0; i <= amountOfElements; i++)	
 		array[i] = rand() % (boundB - boundA + 1) + boundA;
 
-	printf("Correct random\n");
-
 	for (int i = 0; i <= amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
+
+	printf("\n");
 
 	return 0;
 
@@ -95,11 +93,11 @@ int elements_array_mixer(int array[], int amountOfElements) {
 		array[i+1] = element;
 	}
 
-	printf("Correct mixer\n");
-
 	for (int i = 0; i <= amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
+
+	printf("\n");
 
 	return 0;	
 
@@ -112,9 +110,8 @@ double average(int array[], int amountOfElements) {
 		sumAndAverage += array[i];
 	}
 
-	sumAndAverage /= (amountOfElements)+1;
-
-	printf("Correct average\n");
+	amountOfElements++;
+	sumAndAverage /= amountOfElements;
 
 	return sumAndAverage;
 
