@@ -2,6 +2,7 @@
 заданы оценки по трем экзаменам. Определить количество
 отличников и их процент от общего числа студентов.*/
 #include <stdio.h>
+#include <cstdlib>
 #define SIZE 100
 
 struct marks_t {
@@ -10,7 +11,7 @@ struct marks_t {
 
 void user_array_filler(marks_t *array, int amountOfElements); 
 
-int input_file(marks_t *array, int amountOfElements, char*);
+int input_file(marks_t *array, char*);
 int amount();
 int	excelent_students_counter(marks_t *array, int amountOfElements);
 int mark_check(int mark);
@@ -32,24 +33,22 @@ int main() {
 			printf("Mode must satisfy (choice = 1 or choice = 2)\n");
 	}while((userChoice != 1)&&(userChoice != 2));
 
-// AMOUNT OF STUDENTS
-	amountOfElements = amount();
 
 // CHOICE
 	if (userChoice == 1) {
+		amountOfElements = amount(); // AMOUNT OF STUDENTS
 		user_array_filler(array, amountOfElements);
 	}
 	else {
-		int openFileError;
-		openFileError = input_file(array, amountOfElements, fileName);	
-		if (openFileError == 0)
+		amountOfElements = input_file(array, fileName);	
+		if (amountOfElements == 0)
 			return 0;
 	}
 
 	excelentStudentsCount = excelent_students_counter(array, amountOfElements);	
 	excelentStudentsPercent = excelent_students_percent(excelentStudentsCount, amountOfElements);
 
-	printf("Excelent students count = %d\nExcelent students percent = %.3lf", 
+	printf("Excelent students count = %d\nExcelent students percent = %.3lf\n", 
 			excelentStudentsCount, excelentStudentsPercent);
 
 	return 0;
@@ -93,40 +92,44 @@ void user_array_filler(marks_t *array, int amountOfElements) {
 }
 
 // FILLING FROM FILE
-int input_file(marks_t *array, int amountOfElements, char * fileName) {
+int input_file(marks_t *array, char fileName[]) {
 
-	int flag;
+	int amountOfElements;
 
 	FILE *ft;
-	ft=fopen(fileName,"rt");
+	ft=fopen(fileName,"rt");	
 
 	if (ft == 0) {
 		printf("ERROR: CANT'T FIND SOURCE FILE\n");
 		return 0;
 	}
-	
+
+
+	fscanf(ft, "%d", &amountOfElements);
+
+	if (amountOfElements <= 0){
+			printf("Amount of students must satisfy (n>0)\n");
+			return 0;
+	}
 		
-	do {
-		flag = 0;
-		for (int i = 0; i < amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 			fscanf(ft, "%d %d %d", &array[i].object1, &array[i].object2, &array[i].object3);
 
-			if (mark_check(array[i].object1)*mark_check(array[i].object1)*mark_check(array[i].object1) == 0) {
-					printf("ERROR: INCORRECT INPUT\nMust satisfy (0 < ELEMENT <= 5)\n");
-					flag = 1;
-					break;
+			if ((mark_check(array[i].object1) * mark_check(array[i].object2) * mark_check(array[i].object3))==0) {
+				printf("ERROR: INCORRECT INPUT\nMust satisfy (0 < ELEMENT <= 5)\n");
+				return 0;
 			}
-		}
-	}while(flag != 0);
+
+	}
 
 	fclose(ft);
 
-	return 1;
+	return amountOfElements;
 }
 
 int mark_check(int mark) {
 
-	if 	((mark > 5) || (mark < 1))
+	if 	((mark < 1) || (mark > 5))
 		return 0;
 
 	return 1;
