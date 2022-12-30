@@ -6,7 +6,7 @@ int main() {
 	int daysCounter = 0;
 
 	while(noseLength < 45.0) {
-		noseLength += noseLength * 1/20;
+		noseLength += noseLength * 1.05;
 		daysCounter += 2;
 		printf("Days = %d; Nose Length = %lf\n", daysCounter, noseLength);
 	}

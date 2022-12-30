@@ -19,13 +19,9 @@ int main() {
 
 int lie_days_counter(double noseLength, int daysCounter) {
 
-	if (noseLength < 45.0) {
-		noseLength += noseLength * 1/20;
-		daysCounter += 2;
-		
-		return lie_days_counter(noseLength, daysCounter);
+	if (noseLength > 45.0) {
+		return daysCounter;
 	}	
-
-	return daysCounter;
+	return lie_days_counter(noseLength * 1.05, daysCounter + 2);
 
 }
