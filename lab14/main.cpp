@@ -6,12 +6,11 @@
 
 double average(int array[], int amountOfElements); 
 
-int amount(),
-	elements_array_mixer(int array[], int amountOfElements), 
-	user_array_filler(int array[], int amountOfElements), 
-	random_array_filler(int array[], int boundA, int boundB, int amountOfElements);
+int amount(), input_file(int array[]);
 
-void input_file(int array[], int amountOfElements), 
+void user_array_filler(int array[], int amountOfElements), 
+	 random_array_filler(int array[], int boundA, int boundB, int amountOfElements),
+	 elements_array_mixer(int array[], int amountOfElements), 
 	 output_file(int array[], int amountOfElements);
 
 int main() {
@@ -29,8 +28,6 @@ int main() {
 			case 1:
 				amountOfElements = amount();
 				user_array_filler(array, amountOfElements);
-				elements_array_mixer(array,amountOfElements);
-				output_file(array, amountOfElements);
 				break;
 			case 2:
 				amountOfElements = amount();
@@ -42,20 +39,22 @@ int main() {
 				}while(A > B);
 
 				random_array_filler(array, A, B, amountOfElements);
-				elements_array_mixer(array, amountOfElements);
-				output_file(array, amountOfElements);
 				break;
 			case 3:
-				amountOfElements = amount();
-				input_file(array, amountOfElements);
-				elements_array_mixer(array,amountOfElements);
-				output_file(array, amountOfElements);
+				amountOfElements = input_file(array);
 				break;
 			default:
 				printf("Mode must satisfy (choice = 1 or choice = 2 or choice = 3)\n");
 				isCorrectArrMode = 1;
 		}
 	}while(isCorrectArrMode==1);
+
+	if (amountOfElements == 0)
+		return 0;
+
+	elements_array_mixer(array,amountOfElements);
+
+	output_file(array, amountOfElements);
 
 	averageResult = average(array, amountOfElements); // RESULT
 
@@ -76,47 +75,42 @@ int amount() {
 			printf("Amount of elements must satisfy (n>0)\n");
 		}while(amountOfElements < 0);
 
-		amountOfElements--;
 		return amountOfElements;
 
 }
 
 // USER ELEMENTS ARRAY FILLING
-int user_array_filler(int array[], int amountOfElements) {
+void user_array_filler(int array[], int amountOfElements) {
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("array[%d] = ", i);
 		scanf("%d", &array[i]);
 	}
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
 
 	printf("\n");
-
-	return 0;
 
 }
 
 // RANDOM ELEMENTS ARRAY FILLING
-int random_array_filler(int array[], int boundA, int boundB, int amountOfElements) {
+void random_array_filler(int array[], int boundA, int boundB, int amountOfElements) {
 
-	for (int i = 0; i <= amountOfElements; i++)	
+	for (int i = 0; i < amountOfElements; i++)	
 		array[i] = rand() % (boundB - boundA + 1) + boundA;
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
 
 	printf("\n");
 
-	return 0;
-
 }
 
 // ELEMENTS ARRAY MIXING
-int elements_array_mixer(int array[], int amountOfElements) {
+void elements_array_mixer(int array[], int amountOfElements) {
 
 	int element;
 	for (int i = 0; i < amountOfElements; i+=2) {
@@ -125,33 +119,38 @@ int elements_array_mixer(int array[], int amountOfElements) {
 		array[i+1] = element;
 	}
 
-	return 0;	
-
 }
 
 // AVERAGE OF ELEMENTS
 double average(int array[], int amountOfElements) {
 
 	double sumAndAverage = 0;		
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		sumAndAverage += array[i];
 	}
 
-	amountOfElements++;
 	sumAndAverage /= amountOfElements;
 
 	return sumAndAverage;
 
 }
 
-// SCAN ARRAY FROM FILE
-void input_file(int array[],int amountOfElements)
+// SCAN ARRAY FROM FILE AND RETURN AMOUNT FROM FILE
+int input_file(int array[])
 {
+	int amountOfElements;
 	FILE *ft;
 	ft=fopen("src.txt","rt");
-	for(int i=0; i <= amountOfElements; i++)
+	if (ft == 0) {
+		printf("ERROR");
+		return 0;
+	}
+	fscanf(ft, "%d", &amountOfElements);
+	for(int i=0; i < amountOfElements; i++)
 		fscanf(ft,"%d",&array[i]);
 	fclose(ft);
+
+	return amountOfElements;
 
 }
 
@@ -159,7 +158,8 @@ void input_file(int array[],int amountOfElements)
 void output_file(int array[], int amountOfElements)
 {
 	FILE* f=fopen("log.txt","w+");
-	for(int i=0; i <= amountOfElements; i++)
+	fprintf(f,"%d ",amountOfElements);
+	for(int i=0; i < amountOfElements; i++)
 		fprintf(f,"%d ",array[i]);
 	fclose(f);
 }
