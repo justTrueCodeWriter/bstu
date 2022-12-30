@@ -1,3 +1,6 @@
+/*Вычислить среднее арифметическое элементов массива.
+Поменять местами элементы, стоящие на четных и нечетных
+позициях.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctime>
@@ -5,7 +8,10 @@
 #define SIZE 100
 
 double average(int array[], int amountOfElements); 
-int elements_array_mixer(int array[], int amountOfElements), user_array_filler(int array[], int amountOfElements), random_array_filler(int array[], int boundA, int boundB, int amountOfElements);
+
+void elements_array_mixer(int array[], int amountOfElements), 
+	 user_array_filler(int array[], int amountOfElements), 
+	 random_array_filler(int array[], int boundA, int boundB, int amountOfElements);
 
 int main() {
 
@@ -22,15 +28,12 @@ int main() {
 	do {
 		printf("Amount of elements = ");	scanf("%d", &amountOfElements);
 
-		if (amountOfElements < 0)
+		if (amountOfElements <= 0)
 			printf("Amount of elements must satisfy (n>0)\n");
-	}while(amountOfElements < 0);
-
-	amountOfElements--;
+	}while(amountOfElements <= 0);
 
 	if (userChoice == 1) {
 		user_array_filler(array, amountOfElements);
-		elements_array_mixer(array,amountOfElements);
 	}
 	else {
 		do {
@@ -41,8 +44,9 @@ int main() {
 		}while(A > B);
 
 		random_array_filler(array, A, B, amountOfElements);
-		elements_array_mixer(array, amountOfElements);
 	}
+
+	elements_array_mixer(array, amountOfElements);
 
 	averageResult = average(array, amountOfElements);
 
@@ -52,39 +56,34 @@ int main() {
 
 }
 
-int user_array_filler(int array[], int amountOfElements) {
+void user_array_filler(int array[], int amountOfElements) {
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("array[%d] = ", i);
 		scanf("%d", &array[i]);
 	}
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
 
 	printf("\n");
-
-	return 0;
-
 }
 
-int random_array_filler(int array[], int boundA, int boundB, int amountOfElements) {
+void random_array_filler(int array[],int amountOfElements, int boundA, int boundB) {
 
-	for (int i = 0; i <= amountOfElements; i++)	
+	for (int i = 0; i < amountOfElements; i++)	
 		array[i] = rand() % (boundB - boundA + 1) + boundA;
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
 
 	printf("\n");
 
-	return 0;
-
 }
 
-int elements_array_mixer(int array[], int amountOfElements) {
+void elements_array_mixer(int array[], int amountOfElements) {
 
 	int element;
 	for (int i = 0; i < amountOfElements; i+=2) {
@@ -93,24 +92,21 @@ int elements_array_mixer(int array[], int amountOfElements) {
 		array[i+1] = element;
 	}
 
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		printf("%d ", array[i]);
 	}
 
 	printf("\n");
-
-	return 0;	
 
 }
 
 double average(int array[], int amountOfElements) {
 
 	double sumAndAverage = 0;		
-	for (int i = 0; i <= amountOfElements; i++) {
+	for (int i = 0; i < amountOfElements; i++) {
 		sumAndAverage += array[i];
 	}
 
-	amountOfElements++;
 	sumAndAverage /= amountOfElements;
 
 	return sumAndAverage;
