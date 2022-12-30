@@ -2,7 +2,7 @@
 int task_1() {
 
     int n, st = 1, flag = 0;
-    double s = 0, x;
+    double summ = 0, x;
 
 	do {
 		printf("n = "); scanf("%d", &n);
@@ -16,11 +16,11 @@ int task_1() {
 
     for (int i = 2; i <= n; i++) {
 		printf("i = %d\n", i);
-        st += -1;
-        s += (1 + x) / (i - 1);
+        st *= -1;
+        summ += st * (1 + x) / (i - 1);
     }
 
-	printf("result = %lf", s);
+	printf("result = %lf", summ);
 
     return 0;
 

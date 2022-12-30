@@ -3,27 +3,25 @@
 int task_2() {
 
     int stl = -1, i = 1, k = 1;
-    double s = 0, x, stx, e, sl, f = 1;
+    double summ = 0, x, stx, e, sl, f = 1;
 
     printf("x = "); scanf("%lf", &x);
     printf("e = "); scanf("%lf", &e);
-    stx = x;
+    stx = 1;
 
+	f = 120;
     do {
         printf("i = %d\n", i);
-        while(k <= i) {
-            k++;
-            x *= x;
-        }
 
-        sl = stl * stx / f;
-        s += sl;
+		stx *= x;
+
+        sl = stl * pow(3, stx) / f;
+        summ += sl;
         i++;
-        stx *= x;
         stl *= -1;
-        f *= (-1)*(2 * i + 3);
+        f *= (2 * i + 3)*(2 * i + 2);
     } while (fabs(sl) > e);
-    printf("%lf", s);
+    printf("%lf", summ);
 
     return 1;
 
