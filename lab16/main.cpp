@@ -132,7 +132,7 @@ int array_reader_binary(marks_t *array, char *fileName) {
 
 
 	//fscanf(ft, "%d", &amountOfElements);
-	fread(array, sizeof(char), 1, ft);
+	fread(array, sizeof(int), 1, ft);
 
 	if (amountOfElements <= 0){
 			printf("Amount of students must satisfy (n>0)\n");
