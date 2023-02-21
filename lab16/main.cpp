@@ -109,8 +109,9 @@ int array_saver_binary(marks_t *array, int amountOfElements, char *fileName) {
 		return 0;
 	}
 
-	for (int i = 0; i < amountOfElements; i++)
-			fprintf(ft, "%d %d %d\n", array[i].subject1, array[i].subject2, array[i].subject3);
+	//for (int i = 0; i < amountOfElements; i++)
+			//fprintf(ft, "%d %d %d\n", array[i].subject1, array[i].subject2, array[i].subject3);
+	fwrite(array, sizeof(marks_t), amountOfElements, ft);
 
 	fclose(ft);
 	return 0;
@@ -130,14 +131,15 @@ int array_reader_binary(marks_t *array, char *fileName) {
 	}
 
 
-	fscanf(ft, "%d", &amountOfElements);
+	//fscanf(ft, "%d", &amountOfElements);
+	fread(array, sizeof(char), 1, ft);
 
 	if (amountOfElements <= 0){
 			printf("Amount of students must satisfy (n>0)\n");
 			return 0;
 	}
 		
-	for (int i = 0; i < amountOfElements; i++) {
+	/*for (int i = 0; i < amountOfElements; i++) {
 			fscanf(ft, "%d %d %d", &array[i].subject1, &array[i].subject2, &array[i].subject3);
 
 			if ((mark_check(array[i].subject1) * mark_check(array[i].subject2) * mark_check(array[i].subject3))==0) {
@@ -145,7 +147,8 @@ int array_reader_binary(marks_t *array, char *fileName) {
 				return 0;
 			}
 
-	}
+	}*/
+	fread(array, sizeof(marks_t), amountOfElements, ft);
 
 	fclose(ft);
 
