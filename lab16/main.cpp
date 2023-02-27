@@ -53,7 +53,7 @@ int main() {
 
 			default: printf("Mode must satisfy (choice = 1 or choice = 2 or choice = 3)\n");
 		}
-	}while((userChoice != 1)&&(userChoice != 2) && (userChoice != 3));
+	}while((userChoice != 1)||(userChoice != 2)||(userChoice != 3));
 
 	excelentStudentsCount = excelent_students_counter(array, amountOfElements);	
 	excelentStudentsPercent = excelent_students_percent(excelentStudentsCount, amountOfElements);
