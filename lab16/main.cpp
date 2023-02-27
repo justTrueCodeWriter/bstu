@@ -21,10 +21,12 @@ int mark_check(int mark);
 
 double excelent_students_percent(int excelent_students_count, int amountOfElements);
 
+void array_screen_output(marks_t *array, int amountOfElements);
+
 int main() {
 
 	int userChoice, amountOfElements, excelentStudentsCount;
-	char textFileName[]="src.txt", binFileName[]="src.txt", savedBinFileName[]="saved.bin";
+	char textFileName[]="src.txt", binFileName[]="src.bin";
 	double excelentStudentsPercent;
 	marks_t array[SIZE];	
 
@@ -35,7 +37,7 @@ int main() {
 		switch (userChoice) {
 			case 1: amountOfElements = amount(); // AMOUNT OF STUDENTS
 					user_array_filler(array, amountOfElements);
-					array_saver_binary(array, amountOfElements, savedBinFileName);
+					array_saver_binary(array, amountOfElements, binFileName);
 					break;
 
 			case 2: amountOfElements = array_reader_txt(array, textFileName);	
@@ -44,6 +46,7 @@ int main() {
 					break;
 
 			case 3: amountOfElements = array_reader_binary(array, binFileName);
+					array_screen_output(array, amountOfElements);
 					if (amountOfElements == 0)
 						return 0;
 					break;
@@ -77,7 +80,7 @@ int amount() {
 	return amountOfElements;
 }
 
-// FILLING FROM USER
+// FILLING BY USER
 void user_array_filler(marks_t *array, int amountOfElements) {
 	
 	int flag;
@@ -109,8 +112,8 @@ int array_saver_binary(marks_t *array, int amountOfElements, char *fileName) {
 		return 0;
 	}
 
-	//for (int i = 0; i < amountOfElements; i++)
-			//fprintf(ft, "%d %d %d\n", array[i].subject1, array[i].subject2, array[i].subject3);
+	
+	fwrite(&amountOfElements, sizeof(int), 1, ft);	
 	fwrite(array, sizeof(marks_t), amountOfElements, ft);
 
 	fclose(ft);
@@ -132,22 +135,13 @@ int array_reader_binary(marks_t *array, char *fileName) {
 
 
 	//fscanf(ft, "%d", &amountOfElements);
-	fread(array, sizeof(int), 1, ft);
+	fread(&amountOfElements, sizeof(int), 1, ft);
 
 	if (amountOfElements <= 0){
 			printf("Amount of students must satisfy (n>0)\n");
 			return 0;
 	}
 		
-	/*for (int i = 0; i < amountOfElements; i++) {
-			fscanf(ft, "%d %d %d", &array[i].subject1, &array[i].subject2, &array[i].subject3);
-
-			if ((mark_check(array[i].subject1) * mark_check(array[i].subject2) * mark_check(array[i].subject3))==0) {
-				printf("ERROR: INCORRECT INPUT\nMust satisfy (0 < ELEMENT <= 5)\n");
-				return 0;
-			}
-
-	}*/
 	fread(array, sizeof(marks_t), amountOfElements, ft);
 
 	fclose(ft);
@@ -222,5 +216,13 @@ double excelent_students_percent(int excelentStudentsCount, int amountOfElements
 	result = excelentStudentsCount * 100.0 / amountOfElements;
 
 	return result;	
+
+}
+
+void array_screen_output(marks_t *array, int amountOfElements) {
+
+	for (int i = 0; i < amountOfElements; i++) {
+		printf("Student %d: %d %d %d\n", i+1, array[i].subject1, array[i].subject2, array[i].subject3);
+	}
 
 }
