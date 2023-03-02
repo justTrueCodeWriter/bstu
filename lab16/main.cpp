@@ -172,7 +172,7 @@ int array_reader_txt(marks_t *array, char *fileName) {
 	}
 		
 	for (int i = 0; i < amountOfElements; i++) {
-			fscanf(ft, "%d %d %d", &array[i].subject1, &array[i].subject2, &array[i].subject3);
+		fscanf(ft, "%d %d %d", &array[i].subject1, &array[i].subject2, &array[i].subject3);
 
 			if ((mark_check(array[i].subject1) * mark_check(array[i].subject2) * mark_check(array[i].subject3))==0) {
 				printf("ERROR: INCORRECT INPUT\nMust satisfy (0 < ELEMENT <= 5)\n");

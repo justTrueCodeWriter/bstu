@@ -6,7 +6,8 @@ int main() {
 
 	float number1, number2;
 	float *maximum, *minimum;
-
+	float &a = number1;
+	*&*&*&number1
 	printf("number1 = "); scanf("%f", &number1);
 	printf("number2 = "); scanf("%f", &number2);
 
