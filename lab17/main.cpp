@@ -11,8 +11,9 @@ int output_mode(int arr[ROWS][COLS], int rows, int cols);
 void user_array_filler(int arr[ROWS][COLS], int rows, int cols); 
 int array_reader_txt(int arr[ROWS][COLS], char *fileName);
 int array_reader_binary(int arr[ROWS][COLS], char *fileName);
-int random_array_filler(int arr[ROWS][COLS]);
-int formula_array_filler(int arr[ROWS][COLS]);
+void random_array_filler(int arr[ROWS][COLS], int rows, int cols);
+double formula(int i, int j);
+void formula_array_filler(int arr[ROWS][COLS], int rows, int cols);
 
 void screen_array_printer(int arr[ROWS][COLS], int rows, int cols);
 int array_saver_txt(int arr[ROWS][COLS], int rows, int cols, char *fileName);
@@ -62,9 +63,9 @@ int fill_mode(int arr[ROWS][COLS], int rows, int cols){
 					break;
 			case 3: errorStatus = array_reader_binary(arr, binFileName);
 					break;
-			case 4: errorStatus = random_array_filler(arr);
+			case 4: random_array_filler(arr, rows, cols);
 					break;
-			case 5: errorStatus = formula_array_filler(arr); 
+			case 5: formula_array_filler(arr, rows, cols); 
 					break;
 			default: printf("Mode must satisfy (1 <= choice <= 5)\n");
 		}
@@ -124,18 +125,37 @@ int array_reader_binary(int arr[ROWS][COLS], char *fileName) {
 	return 0;
 }
 
-int random_array_filler(int arr[ROWS][COLS]) {
+void random_array_filler(int arr[ROWS][COLS], int rows, int cols) {
 
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			arr[i][j] = rand() % 999 + 1;
+		}
+	}
 
-	printf("random_array_filler");
-	return 0;
 }
 
-int formula_array_filler(int arr[ROWS][COLS]) {
+double formula(int i, int j) {
 
+	if (i < j) {
+		return 1.0/(i+j);
+	}
+	else if (i == j) {
+	 return i;	
+	}
+	else 
+		return -8.0/(i+j-1);
 
-	printf("formula_array_filler");
-	return 0;
+}
+
+void formula_array_filler(int arr[ROWS][COLS], int rows, int cols) {
+
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			arr[i][j] = formula(i, j);
+		}
+	}
+
 }
 
 void screen_array_printer(int arr[ROWS][COLS], int rows, int cols) {
@@ -150,9 +170,26 @@ void screen_array_printer(int arr[ROWS][COLS], int rows, int cols) {
 
 int array_saver_txt(int arr[ROWS][COLS], int rows, int cols, char *fileName) {
 
+	FILE *ft;
+	ft=fopen(fileName,"wt");	
+
+	if (ft == 0) {
+		printf("ERROR: CANT'T FIND SOURCE FILE\n");
+		return 0;
+	}
+
+	fprintf(ft, "%d %d", rows, cols);
+
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			fprintf(ft, "%d", arr[i][j]);
+		}
+		fprintf(ft, "%d", arr[i][j]);
+	}
+		
+	fclose(ft);
 
 	printf("array_saver_txt");
-	return 0;
 }
 int array_saver_binary(int arr[ROWS][COLS], int rows, int cols, char *fileName) {
 
