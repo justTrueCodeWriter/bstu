@@ -4,18 +4,26 @@
 
 void string_input(char *str1, char *str2);
 int get_len(char *stringArr);
-void delete_second_from_first(char *str1, char *str2);
+int delete_second_from_first(char *str1, char *str2);
 
 int main() {
 
 	char str1[SIZE];
 	char str2[SIZE];
 
+	int errorCheck;
+
 	string_input(str1, str2);	
 
-	delete_second_from_first(str1, str2);
+	errorCheck = delete_second_from_first(str1, str2);
+
+	if (errorCheck==1) 
+		printf("str2 not in the str1\n");
 	
-	printf("Edited str: %s\n", str1);
+	else
+		printf("Edited str: %s\n", str1);
+
+	return 0;
 
 }
 
@@ -38,12 +46,15 @@ int get_len(char *stringArr) {
 
 }
 
-void delete_second_from_first(char *str1, char *str2) {
+int delete_second_from_first(char *str1, char *str2) {
 	int len1 = get_len(str1);
 	int len2 = get_len(str2);
 
 	char tmpArr1[len2];
 	char tmpArr2[len2];
+
+	bool isInLine = false;
+
 	int getPosition=0;
 
 	for (int i = 0; i < len2; i++) {
@@ -55,14 +66,20 @@ void delete_second_from_first(char *str1, char *str2) {
 			tmpArr1[j]=str1[i+j];
 		}
 	
-		if (*tmpArr1==*tmpArr2){
+		if (tmpArr1==tmpArr2){
+			isInLine = true;
 			getPosition=i;
 			break;
 		}
 	}
 
-	for (int k = 0; k<len2; k++) {
+	if (isInLine == true)
+		for (int k = 0; k<len2; k++) {
 			str1[getPosition+k] = ' ';
 	}
+	else
+		return 1;	
+
+	return 0;
 
 }
