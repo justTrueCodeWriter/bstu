@@ -10,8 +10,8 @@ int main() {
 	int countSymb;
 
 	char stringArr[SIZE];	
-	//const char* vowels = "АЕЁИОУЫЭЮЯ";
-	char vowels[] = "AEIOYU";
+	const char* vowels = "АЕЁИОУЫЭЮЯ";
+	//char vowels[] = "AEIOYU";
 
 	string_input(stringArr);
 	countSymb = check_string(stringArr, vowels);
