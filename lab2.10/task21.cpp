@@ -15,7 +15,7 @@ int main() {
 	string_input(str1, str2);	
 
 	delete_second_from_first(str1, str2, strChanged);
-	
+
 	printf("%s\n%s\n%s\n", str1, str2, strChanged);
 
 }
