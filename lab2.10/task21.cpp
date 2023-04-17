@@ -4,7 +4,6 @@
 
 void string_input(char *str1, char *str2);
 int get_len(char *stringArr);
-int check_element();
 int delete_second_from_first(char *str1, char *str2);
 
 int main() {
@@ -55,7 +54,6 @@ int delete_second_from_first(char *str1, char *str2) {
 	char tmpArr1[len2];
 	char tmpArr2[len2];
 
-	bool isInLine = false;
 
 	int getPosition=0;
 
@@ -63,21 +61,31 @@ int delete_second_from_first(char *str1, char *str2) {
 		tmpArr2[i] = str2[i];
 	}
 
+	int isInLineCount=0;
+	int localPosition=0;
+
 	for (int i = 0; i<len1-len2+1; i++) {
 		for (int j = 0; j<len2; j++) {
 			tmpArr1[j]=str1[i+j];
 		}
 
-		while() {
-	
-		if (tmpArr1==tmpArr2){
-			isInLine = true;
+		isInLineCount=0;
+		localPosition=0;
+		while(localPosition < len2) {
+			
+			if (tmpArr1[localPosition]==tmpArr2[localPosition]){
+				isInLineCount++;
+			}
+			localPosition++;
+		}
+
+		if (isInLineCount==len2) { 
 			getPosition=i;
 			break;
 		}
 	}
 
-	if (isInLine == true)
+	if (isInLineCount == len2)
 		for (int k = 0; k<len2; k++) {
 			str1[getPosition+k] = ' ';
 	}
