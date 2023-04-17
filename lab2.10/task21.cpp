@@ -4,19 +4,28 @@
 
 void string_input(char *str1, char *str2);
 int get_len(char *stringArr);
-void delete_second_from_first(char *str1, char *str2, char *strChanged);
+int check_element();
+int delete_second_from_first(char *str1, char *str2);
 
 int main() {
 
 	char str1[SIZE];
 	char str2[SIZE];
-	char strChanged[SIZE];
+
+	int errorCheck;
 
 	string_input(str1, str2);	
 
-	delete_second_from_first(str1, str2, strChanged);
 
-	printf("%s\n%s\n%s\n", str1, str2, strChanged);
+	errorCheck = delete_second_from_first(str1, str2);
+
+	if (errorCheck==1) 
+		printf("str2 not in the str1\n");
+	
+	else
+		printf("Edited str: %s\n", str1);
+
+	return 0;
 
 }
 
@@ -39,24 +48,42 @@ int get_len(char *stringArr) {
 
 }
 
-void delete_second_from_first(char *str1, char *str2, char *strChanged) {
+int delete_second_from_first(char *str1, char *str2) {
 	int len1 = get_len(str1);
-	printf("%d\n", len1);
 	int len2 = get_len(str2);
-	printf("%d\n", len2);
 
-	for (int i = 0; i<len1-len2-1; i++) {
-		for (int j = 0; i<len2; j++) {
-			if (str1[i+j]==str2[j])
-				str1[i+j]=' ';
+	char tmpArr1[len2];
+	char tmpArr2[len2];
+
+	bool isInLine = false;
+
+	int getPosition=0;
+
+	for (int i = 0; i < len2; i++) {
+		tmpArr2[i] = str2[i];
+	}
+
+	for (int i = 0; i<len1-len2+1; i++) {
+		for (int j = 0; j<len2; j++) {
+			tmpArr1[j]=str1[i+j];
+		}
+
+		while() {
+	
+		if (tmpArr1==tmpArr2){
+			isInLine = true;
+			getPosition=i;
+			break;
 		}
 	}
 
-	int k = 0;
-	for (; k<len1; k++) {
-		if (str1[k]!=' ')
-			strChanged[k] = str1[k];
+	if (isInLine == true)
+		for (int k = 0; k<len2; k++) {
+			str1[getPosition+k] = ' ';
 	}
-	strChanged[k] = '\0';
+	else
+		return 1;	
+
+	return 0;
 
 }
