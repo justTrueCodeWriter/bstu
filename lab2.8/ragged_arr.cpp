@@ -1,6 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "regged_arr.h"
+#include "ragged_arr.h"
+
+int get_len(char *stringArr) {
+
+	int counter=0;
+	while (stringArr[counter]!='\n')	
+		counter++;
+	return counter;
+
+}
+
+void array_init(char **arr) {
+
+	arr = (char**)malloc(sizeof(char*));
+
+}
 
 int fill_mode(char **arr, int &mainRows, int &mainCols){
 
@@ -30,6 +46,7 @@ int fill_mode(char **arr, int &mainRows, int &mainCols){
 
 	return 0;
 }
+
 int output_mode(char **arr, int rows, int cols){
 
 	int userChoice, errorStatus;
@@ -131,6 +148,7 @@ int array_save_txt(char **arr, int rows, int cols, char *fileName) {
 
 	return 0;
 }
+
 int array_save_binary(char **arr, int rows, int cols, char *fileName) {
 
 	FILE *ft;
