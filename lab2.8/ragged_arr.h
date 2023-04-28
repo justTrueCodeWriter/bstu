@@ -1,15 +1,27 @@
-void array_init(char** arr);
+#include <stdio.h>
+#include <stdlib.h>
 
-int fill_mode(char** arr, int &mainRows, int &mainCols);
-int output_mode(char** arr, int rows, int cols);
+#define TERMINAL_VALUE -1
 
-void array_user_fill(char** arr, int rows, int cols); 
+struct raggedArr {
+	int** data=NULL;	
+};
 
-int get_len(char *stringArr);
+void array_init(raggedArr ragArr);
+void memory_release(raggedArr ragArr);
 
-int array_read_txt(char** arr, int &rows, int &cols, char *fileName);
-int array_read_binary(char** arr, int &rows, int &cols, char *fileName);
+int get_rows(int &rows);
 
-void array_screen_print(char** arr);
-int array_save_txt(char** arr, int rows, int cols, char *fileName);
-int array_save_binary(char** arr, int rows, int cols, char *fileName);
+int fill_mode(raggedArr ragArr, int &mainRows, int &mainCols);
+int output_mode(raggedArr ragArr, int rows, int cols);
+
+void array_user_fill(raggedArr ragArr, int rows, int cols); 
+
+int get_len(int *stringArr);
+
+int array_read_txt(raggedArr ragArr, int &rows, int &cols, char *fileName);
+int array_read_binary(raggedArr ragArr, int &rows, int &cols, char *fileName);
+
+void array_screen_print(raggedArr ragArr);
+int array_save_txt(raggedArr ragArr, int rows, int cols, char *fileName);
+int array_save_binary(raggedArr ragArr, int rows, int cols, char *fileName);
