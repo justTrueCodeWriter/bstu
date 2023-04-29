@@ -9,19 +9,16 @@ int main() {
 
 	array_init(ragArr);
 
-	array_user_fill(ragArr, mainRows, mainCols);
-	array_screen_print(ragArr);
-	memory_release(ragArr);
-
-	//errorStatus = fill_mode(ragArr.data, mainRows, mainCols);
+	errorStatus = fill_mode(ragArr);
 	if (errorStatus == -1) {
 		return -1;
 	}
 
-	//array_screen_print(ragArr.data);
+	array_screen_print(ragArr);
 
-	//output_mode(ragArr.data, mainRows, mainCols);
+	output_mode(ragArr);
 	
+	memory_release(ragArr);
 	return 0;
 
 }

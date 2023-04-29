@@ -3,18 +3,44 @@
 
 #include "ragged_arr.h"
 
-int get_len(int *arr) {
+int get_rows_len(raggedArr ragArr) {
 
 	int counter=0;
-	while (arr[counter]!='\n')	
+	while (ragArr.data[counter][0]!=TERMINAL_VALUE)	
 		counter++;
 	return counter;
 
 }
 
+int get_cols_len(raggedArr ragArr, int row) {
+	int counter=0;
+	while (ragArr.data[row][counter]!=TERMINAL_VALUE)	
+		counter++;
+	return counter;
+}
+
 void array_init(raggedArr ragArr) {
 
-	ragArr.data= (int**)malloc(sizeof(int*));
+	int rows, cols;
+
+	do{
+		printf("rows = "); scanf("%d", &rows);
+	}while(rows<=0);
+
+	ragArr.data = (int**)malloc(sizeof(int*)*(rows+1));
+
+	for(int i = 0; i < rows; i++)	{
+		do {
+			printf("cols[%d] = ", i+1); scanf("%d", &cols);
+		}while(cols<=0);
+		ragArr.data[i] = (int*)malloc(sizeof(int)*(cols+1));
+		for (int j = 0; j < cols; j++) {
+			ragArr.data[i][j] = 0;
+		}
+		ragArr.data[i][cols] = TERMINAL_VALUE;
+	}
+	ragArr.data[rows] = (int*)malloc(sizeof(int));
+	*ragArr.data[rows] = TERMINAL_VALUE;
 
 }
 
@@ -24,29 +50,20 @@ void memory_release(raggedArr ragArr) {
 	free(ragArr.data);
 }
 
-int get_rows(int &rows) {
-	do {
-		printf("rows = "); scanf("%d", &rows);
-	}while(rows <= 0);
-
-	return rows;
-}
-
 int fill_mode(raggedArr ragArr){
 
-	int userChoice, errorStatus=0, rows, cols;
-	char textFileName[]="src.txt", binFileName[]="src.bin";
+	int userChoice, errorStatus=0;
+	const char *textFileName="src.txt", binFileName[]="src.bin";
 // FILL MODE
 	do {
 		printf("Select the array fill mode:\nUser input(1)\nArray from text file(2)\nArray from binary file(3)\n> "); 
 		scanf("%d", &userChoice);
 		switch (userChoice) {
-			case 1:	get_rows(rows);
-					array_user_fill(ragArr.data, rows, cols);
+			case 1:	array_user_fill(ragArr);
 					break;
-			case 2: errorStatus = array_read_txt(ragArr.data, rows, cols, textFileName);	
+			case 2: errorStatus = array_read_txt(ragArr, textFileName);	
 					break;
-			case 3: errorStatus = array_read_binary(ragArr.data, rows, cols, binFileName);
+			case 3: errorStatus = array_read_binary(ragArr, binFileName);
 					break;
 			default: printf("Mode must satisfy (1 <= choice <= 3)\n"); 
 					 errorStatus = -1;
@@ -59,19 +76,19 @@ int fill_mode(raggedArr ragArr){
 	return 0;
 }
 
-int output_mode(raggedArr ragArr, int rows, int cols){
+int output_mode(raggedArr ragArr){
 
 	int userChoice, errorStatus;
 
-	char textFileName[]="src.txt", binFileName[]="src.bin";
+	const char *textFileName="src.txt", binFileName[]="src.bin";
 // OUTPUT MODE
 	do {
 		printf("Select the array output mode:\nSave to text file(1)\nSave to binary file(2)\n> "); 
 		scanf("%d", &userChoice);
 		switch (userChoice) {
-			case 1: errorStatus  = array_save_txt(ragArr.data, rows, cols, textFileName);	
+			case 1: errorStatus  = array_save_txt(ragArr, textFileName);	
 					break;
-			case 2: errorStatus = array_save_binary(ragArr.data, rows, cols, binFileName);
+			case 2: errorStatus = array_save_binary(ragArr, binFileName);
 					break;
 			default: printf("Mode must satisfy (choice = 1 or choice = 2)\n");
 		}
@@ -83,20 +100,25 @@ int output_mode(raggedArr ragArr, int rows, int cols){
 	return 0;
 }
 
-void array_user_fill(raggedArr ragArr, int rows) {
+void array_user_fill(raggedArr ragArr) {
+	int rows;
+	rows = get_rows_len(ragArr);
 	for (int i = 0; i < rows; i++) {
 		int cols;
-		scanf("%d", &cols);
+		cols = get_cols_len(ragArr, i);	
+		printf("arr[%d] = ", i+1);
 		for (int j = 0; j < cols; j++) {
-			printf(": "); scanf("%d", &ragArr.data[i][j]);
+			 scanf("%d", &ragArr.data[i][j]);
 		}
 	}	
 
 }
 
-int array_read_txt(raggedArr ragArr, int &rows, int &cols, char *fileName) {
+int array_read_txt(raggedArr ragArr, const char *fileName) {
 	FILE *ft;
 	ft=fopen(fileName,"rt");	
+
+	int rows, cols;
 
 	if (ft == NULL) {
 		printf("ERROR: CANT'T FIND SOURCE FILE\n");
@@ -114,10 +136,12 @@ int array_read_txt(raggedArr ragArr, int &rows, int &cols, char *fileName) {
 
 }
 
-int array_read_binary(raggedArr ragArr, int &rows, int &cols, char *fileName) {
+int array_read_binary(raggedArr ragArr, const char *fileName) {
 	
 	FILE *ft;
 	ft=fopen(fileName,"rb");	
+
+	int rows, cols;
 
 	if (ft == NULL) {
 		printf("ERROR: CANT'T FIND SOURCE FILE\n");
@@ -139,18 +163,20 @@ int array_read_binary(raggedArr ragArr, int &rows, int &cols, char *fileName) {
 
 void array_screen_print(raggedArr ragArr) {
 
-	for (int i = 0; ragArr.data[i][0] != '\n'; i++) {
-		for (int j = 0; ragArr.data[i][j] != '\n'; j++) {
+	for (int i = 0; ragArr.data[i][0] != TERMINAL_VALUE; i++) {
+		for (int j = 0; ragArr.data[i][j] != TERMINAL_VALUE; j++) {
 			printf("%c", ragArr.data[i][j]);
 		}
 		printf("\n");
 	}
 }
 
-int array_save_txt(raggedArr ragArr, int rows, int cols, char *fileName) {
+int array_save_txt(raggedArr ragArr, const char *fileName) {
 
 	FILE *ft;
 	ft=fopen(fileName,"wt");	
+
+	int rows, cols;
 
 	if (ft == NULL) {
 		printf("ERROR: CANT'T FIND SOURCE FILE\n");
@@ -168,10 +194,12 @@ int array_save_txt(raggedArr ragArr, int rows, int cols, char *fileName) {
 	return 0;
 }
 
-int array_save_binary(raggedArr ragArr, int rows, int cols, char *fileName) {
+int array_save_binary(raggedArr ragArr, const char *fileName) {
 
 	FILE *ft;
 	ft=fopen(fileName,"wb");	
+
+	int rows, cols;
 
 	if (ft == NULL) {
 		printf("ERROR: CANT'T FIND SOURCE FILE\n");
