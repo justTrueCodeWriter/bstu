@@ -3,6 +3,22 @@
 
 #include "ragged_arr.h"
 
+raggedArr ragArr;
+
+
+
+
+
+
+
+// TODO: rewrite from single to multi
+
+
+
+
+
+
+
 int get_rows_len(raggedArr ragArr) {
 
 	int counter=0;
@@ -42,6 +58,9 @@ void array_init(raggedArr ragArr) {
 	ragArr.data[rows] = (int*)malloc(sizeof(int));
 	*ragArr.data[rows] = TERMINAL_VALUE;
 
+	ragArr.data[0][1] = 5;
+	printf("%d\n", ragArr.data[0][1]);
+
 }
 
 void memory_release(raggedArr ragArr) {
@@ -50,58 +69,10 @@ void memory_release(raggedArr ragArr) {
 	free(ragArr.data);
 }
 
-int fill_mode(raggedArr ragArr){
 
-	int userChoice, errorStatus=0;
-	const char *textFileName="src.txt", binFileName[]="src.bin";
-// FILL MODE
-	do {
-		printf("Select the array fill mode:\nUser input(1)\nArray from text file(2)\nArray from binary file(3)\n> "); 
-		scanf("%d", &userChoice);
-		switch (userChoice) {
-			case 1:	array_user_fill(ragArr);
-					break;
-			case 2: errorStatus = array_read_txt(ragArr, textFileName);	
-					break;
-			case 3: errorStatus = array_read_binary(ragArr, binFileName);
-					break;
-			default: printf("Mode must satisfy (1 <= choice <= 3)\n"); 
-					 errorStatus = -1;
-		}
-	}while((userChoice < 1)||(userChoice > 3));
-
-	if (errorStatus == -1)
-		return -1;
-
-	return 0;
-}
-
-int output_mode(raggedArr ragArr){
-
-	int userChoice, errorStatus;
-
-	const char *textFileName="src.txt", binFileName[]="src.bin";
-// OUTPUT MODE
-	do {
-		printf("Select the array output mode:\nSave to text file(1)\nSave to binary file(2)\n> "); 
-		scanf("%d", &userChoice);
-		switch (userChoice) {
-			case 1: errorStatus  = array_save_txt(ragArr, textFileName);	
-					break;
-			case 2: errorStatus = array_save_binary(ragArr, binFileName);
-					break;
-			default: printf("Mode must satisfy (choice = 1 or choice = 2)\n");
-		}
-	}while((userChoice != 1)&&(userChoice != 2));
-
-	if (errorStatus == -1)
-		return -1;
-
-	return 0;
-}
 
 void array_user_fill(raggedArr ragArr) {
-	int rows;
+	/*int rows;
 	rows = get_rows_len(ragArr);
 	for (int i = 0; i < rows; i++) {
 		int cols;
@@ -110,7 +81,8 @@ void array_user_fill(raggedArr ragArr) {
 		for (int j = 0; j < cols; j++) {
 			 scanf("%d", &ragArr.data[i][j]);
 		}
-	}	
+	}*/
+	printf("%d\n", ragArr.data[0][1]);
 
 }
 
