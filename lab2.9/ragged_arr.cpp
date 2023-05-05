@@ -215,3 +215,5 @@ int array_save_binary(const char *fileName) {
 
 	return 0;
 }
+
+//TODO: сортировка строк по длине
