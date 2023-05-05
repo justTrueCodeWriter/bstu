@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #define SIZE 100
 
@@ -25,14 +26,12 @@ void string_input(char *stringArr) {
 
 int check_string(char *stringArr) {
 	int counter = 0;
-
-	if ((stringArr[0]=='k')||(stringArr[0]=='K'))
+	const char* pattern = "k k";
+	if (!strncasecmp(stringArr, pattern, 1))
 		counter++;
 
 	for (int i = 0; stringArr[i]!='\0'; i++) {
-		if (((stringArr[i]==' ')&&(stringArr[i+1]=='k'))||
-				((stringArr[i]==' ')&&(stringArr[i+1]=='K')))
-				
+		if (!strncasecmp(&stringArr[i], &pattern[1], 2))
 			counter++;
 
 	}

@@ -27,7 +27,7 @@ void string_input(char* stringArr) {
 
 int check_string(char* stringArr, const char* vowels) {
 	int counter = 0;
-	for (int j = 0; stringArr[j] != '\n'; j++) {
+	for (int j = 0; stringArr[j] != '\0'; j++) {
 		 for (int i = 0; i < 10; i++) {
 			//printf("%i %i\n", stringArr[j], vowels[i]);
 			if (stringArr[j] == vowels[i]) {
