@@ -49,7 +49,7 @@ void stack_operations() {
 				case 6: return;
 				default: printf("Incorrect choice!\n");
 			}
-		}while((userChoice>=1));
+		}while((userChoice>=1)&&(userChoice<=6));
 	}
 }
 
