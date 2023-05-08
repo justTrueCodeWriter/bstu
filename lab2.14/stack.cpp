@@ -39,9 +39,8 @@ void print_stack(Stack& s) {
 
 void clear_stack(Stack& s, int& length) {
 	if (s.head == NULL) return;
-	for (Element* cur = s.head; cur != NULL; cur = cur->next) {
-		s.head = NULL;
-		s.head = s.head->next;
-	}
+
+	s.head=NULL;	
+
 	length = 0;
 }
