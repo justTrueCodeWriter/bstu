@@ -12,8 +12,8 @@ int main() {
 
 	char stringArr[SIZE];
 	//char vowels[] = "ÀÅ¨ÈÎÓÛİŞß";
-	const char* vowels = "АЕЁИОУЫЭЮЯ";
-	//char vowels[] = "AEIOYU";
+	//const char* vowels = "АЕЁИОУЫЭЮЯ";
+	char vowels[] = "AEIOYU";
 
 	string_input(stringArr);
 	countSymb = check_string(stringArr, vowels);
@@ -28,7 +28,7 @@ void string_input(char* stringArr) {
 int check_string(char* stringArr, const char* vowels) {
 	int counter = 0;
 	for (int j = 0; stringArr[j] != '\0'; j++) {
-		 for (int i = 0; i < 10; i++) {
+		 for (int i = 0; i < 6; i++) {
 			//printf("%i %i\n", stringArr[j], vowels[i]);
 			if (stringArr[j] == vowels[i]) {
 				printf("%c ", stringArr[j]);

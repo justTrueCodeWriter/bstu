@@ -33,7 +33,7 @@ void print_stack(Stack& s) {
 	for (Element * cur = s.head; cur != NULL; cur = cur->next) {
 		printf("%d -> ", cur->data);
 	}	
-	printf("\n");
+	printf("\b\b\b  \n");
 
 }
 

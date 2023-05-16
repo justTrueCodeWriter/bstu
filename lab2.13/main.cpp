@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "stack.h"
 
 //extern Stack stack_field;
@@ -30,7 +31,7 @@ void stack_operations() {
 
 	while (true) {
 		do {	
-			printf("Mode:\nScan num(1)\nPrint elements(2)\nSum elements(3)\nProduct elements(4)\nClear stack(5)\nExit(6)\n> "); scanf("%d", &userChoice);
+			printf("Mode:\nScan num(1)\nPrint elements(2)\nSum elements(3)\nProduct elements(4)\nPull element(5)\nClear stack(6)\nExit(7)\n> "); scanf("%d", &userChoice);
 			switch (userChoice) {
 				case 1: scan_number(stack_field, length); 
 						isStackCleared = false; 
@@ -41,16 +42,20 @@ void stack_operations() {
 							break;
 				case 4: if (!isStackCleared) product_elements(stack_field); 
 						break;
-				case 5: if (!isStackCleared) {
+				case 5: if (!isStackCleared) pull(stack_field);
+							break;
+				case 6: if (!isStackCleared) {
 							clear_stack(stack_field); 
 							isStackCleared = true;
 						}
 						break;
-				case 6: return;
+				case 7: return;
 				default: printf("Incorrect choice!\n");
 			}
-		}while((userChoice>=1)&&(userChoice<=6));
+		}while((userChoice>=1)&&(userChoice<=7));
 	}
+
+	free(stack_field.elements);
 }
 
 void scan_number(Stack& s, int &length) {

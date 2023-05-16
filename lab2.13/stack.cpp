@@ -34,6 +34,8 @@ int push(Stack& s, int d) {
 
 int pull(Stack& s) {
 
+	s.top--;
+
 	if(s.top>=0) return s.elements[s.top];
 	else return 1;
 

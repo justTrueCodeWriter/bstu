@@ -33,43 +33,35 @@ void queue_operations() {
 
 	while (true) {
 		do {	
-			printf("Mode:\nScan num(1)\nPrint elements(2)\nSum elements(3)\nClear queue(4)\nExit(5)\n> "); scanf("%d", &userChoice);
+			printf("Mode:\nScan num(1)\nPull element(2)\nPrint elements(3)\nSqr elements(4)\nClear queue(5)\nExit(6)\n> "); scanf("%d", &userChoice);
 			switch (userChoice) {
 				case 1: scan_number(queue_field, length); break;
-				case 2:	print_queue(queue_field); break; 
-				case 3: sqr_evens(queue_field, sqrElements, sqrCount); break;
-				case 4: print_queue(queue_field);
+				case 2: pull(queue_field); break;
+				case 3:	print_queue(queue_field); break; 
+				case 4: sqr_evens(queue_field, sqrElements, sqrCount);
+						print_queue(queue_field);
 						print_evens(sqrElements, sqrCount);
+						sqrCount=0;
 						break;
 				case 5: clear_queue(queue_field, length); break;
 				case 6: return;
 				default: printf("Incorrect choice!\n");
 			}
-		}while((userChoice>=1));
+		}while((userChoice>=1)&&(userChoice<=6));
 	}
 }
 
 void scan_number(Queue& q, int &length) {
 
-		int tmp=0;
-		int number, numberTmp;
+		int element, numberOfElements;
 
-		printf("n = "); scanf("%d", &number);
+		do {
+			printf("Number of elements "); scanf("%d", &numberOfElements);
+		}while(numberOfElements<=0);
 
-		numberTmp = number;
-
-		for (; numberTmp != 0; length++) {
-			tmp = numberTmp % 10;
-			numberTmp /= 10;
-		}
-		
-
-		printf("Correct init\n");
-
-		while (number != 0) {
-			tmp = number % 10;
-			number /= 10;
-			push(q, tmp);
+		for (int i=0; i < numberOfElements; i++) {
+			printf("n%d = ", i); scanf("%d", &element);
+			push(q, element);
 		}
 }
 
