@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "stack.h"
 
-//extern Stack stack_field;
 
 void stack_operations();
 
@@ -55,7 +54,7 @@ void stack_operations() {
 		}while((userChoice>=1)&&(userChoice<=7));
 	}
 
-	free(stack_field.elements);
+	destruct(stack_field);	
 }
 
 void scan_number(Stack& s, int &length) {

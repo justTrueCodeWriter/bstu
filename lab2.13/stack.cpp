@@ -3,7 +3,6 @@
 
 #include "stack.h"
 
-//Stack s;
 
 void init_stack(Stack& s, int l) {
 
@@ -15,7 +14,7 @@ void init_stack(Stack& s, int l) {
 
 }
 
-void distruct(Stack& s) {
+void destruct(Stack& s) {
 
 	if(s.elements) free(s.elements);
 	s.l=-1;
@@ -29,6 +28,29 @@ int push(Stack& s, int d) {
 	s.top++;
 	s.elements[s.top]=d;
 	return 1;
+
+}
+
+void push_arr1(Stack& s, int* mas, int n) {
+
+
+	if (s.elements != NULL)	
+		free(s.elements);
+
+	s.top=n-1;
+	s.l = n;
+	s.elements = mas;
+
+}
+
+void push_arr2(Stack& s, int* mas, int n) {
+
+	for (int i = 0; i < n; i++) {
+		if (s.top >= s.l-1)
+			break;
+		s.top++;
+		s.elements[s.top] = mas[i];
+	}
 
 }
 

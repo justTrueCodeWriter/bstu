@@ -3,8 +3,6 @@
 
 #include "stack.h"
 
-//Stack s;
-
 void push(Stack& s, int d) {
 
 	Element* e = (Element*)malloc(sizeof(Element));
@@ -40,6 +38,8 @@ void print_stack(Stack& s) {
 void clear_stack(Stack& s, int& length) {
 	if (s.head == NULL) return;
 
+// TODO: clear stack
+//
 	s.head=NULL;	
 
 	length = 0;

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "stack.h"
 
-//extern Stack stack_field;
 
 void stack_operations();
 

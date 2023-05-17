@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "queue.h"
 
-//extern Queue queue_field;
-
 void queue_operations();
 
 void scan_number(Queue& q, int &length);

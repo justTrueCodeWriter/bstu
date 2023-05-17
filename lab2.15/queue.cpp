@@ -3,8 +3,6 @@
 
 #include "queue.h"
 
-//Queue q;
-
 void push(Queue& q, int d) {
 
 	Element* e = (Element*)malloc(sizeof(Element));
@@ -52,6 +50,8 @@ void print_queue(Queue& q) {
 
 void clear_queue(Queue& q, int& length) {
 	if (q.head == NULL) return;
+
+// TODO: clear_queue
 
 	q.head=NULL;	
 

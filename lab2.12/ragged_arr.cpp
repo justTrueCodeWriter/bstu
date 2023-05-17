@@ -235,6 +235,8 @@ void add_last_line() {
 
 	ragArr.data = (int**)realloc(ragArr.data, sizeof(int*)*(rows+2));
 
+	free(ragArr.data[rows]);
+
 	ragArr.data[rows] = (int*)malloc(sizeof(int)*(cols+1));
 	for (int i = 0; i < cols; i++)
 		scanf("%d", &ragArr.data[rows][i]);
@@ -250,15 +252,18 @@ void delete_last_line() {
 	int rows = get_rows_len();
 
 	*ragArr.data[rows-1] = TERMINAL_VALUE;
+
 	free(ragArr.data[rows]);
+
+	ragArr.data = (int**)realloc(ragArr.data, sizeof(int*)*(rows));
 
 }
 
-void sort_by_legth() {
+void sort_by_length() {
 
 	int rows = get_rows_len();
 
-	for (int i = 0; i<rows; i++) {
+	for (int i = 0; i<rows-1; i++) {
 		for (int j = 0; j < rows-i-1; j++)	{
 			if (get_cols_len(j)>get_cols_len(j+1)) {
 				int *tmp = ragArr.data[j];

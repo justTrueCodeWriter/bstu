@@ -39,12 +39,14 @@ void string_input(char *str1, char *str2) {
 }
 
 int delete_second_from_first(char *str1, char *str2) {
-	int len2 = strlen(str2)-1;
+	int len2 = strlen(str2);
 
-	char tmpStr2[len2];
+	char tmpStr2[len2+1];
 	strncpy(tmpStr2, str2, len2);
 
 	char *getPosition = strcasestr(str1, tmpStr2);
+
+// конкатенация
 
 	if (getPosition)
 		for (char k = 0; k<len2; k++) {
