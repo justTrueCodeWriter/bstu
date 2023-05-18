@@ -53,7 +53,12 @@ void clear_queue(Queue& q, int& length) {
 
 // TODO: clear_queue
 
-	q.head=NULL;	
+	for (; q.head != NULL; q.head = q.head->next) {
+		Element* e = q.head;	
+		q.head = q.head->next;
+		free(e);
+		if (q.head==NULL) break;
+	}
 
 	length = 0;
 }

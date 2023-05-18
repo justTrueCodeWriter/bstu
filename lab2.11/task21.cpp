@@ -38,7 +38,9 @@ void string_input(char *str1, char *str2) {
 
 }
 
-int delete_second_from_first(char *str1, char *str2) {
+int delete_second_from_first(char *str1, char *str2, char *strEdited) {
+
+	int len1 = strlen(str1);
 	int len2 = strlen(str2);
 
 	char tmpStr2[len2+1];
@@ -52,6 +54,7 @@ int delete_second_from_first(char *str1, char *str2) {
 		for (char k = 0; k<len2; k++) {
 			*(getPosition+k)=' ';
 		}
+		
 	else
 		return 1;	
 

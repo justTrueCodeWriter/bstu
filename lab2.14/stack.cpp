@@ -39,8 +39,13 @@ void clear_stack(Stack& s, int& length) {
 	if (s.head == NULL) return;
 
 // TODO: clear stack
-//
-	s.head=NULL;	
+	
+	for (; s.head != NULL; s.head = s.head->next) {
+		Element* e = s.head;	
+		s.head = s.head->next;
+		free(e);
+		if (s.head==NULL) break;
+	}
 
 	length = 0;
 }
