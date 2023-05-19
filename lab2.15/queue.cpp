@@ -51,9 +51,9 @@ void print_queue(Queue& q) {
 void clear_queue(Queue& q, int& length) {
 	if (q.head == NULL) return;
 
-// TODO: clear_queue
+// DONE: clear_queue
 
-	for (; q.head != NULL; q.head = q.head->next) {
+	while(q.head != NULL) {
 		Element* e = q.head;	
 		q.head = q.head->next;
 		free(e);

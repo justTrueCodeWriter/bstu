@@ -38,9 +38,9 @@ void print_stack(Stack& s) {
 void clear_stack(Stack& s, int& length) {
 	if (s.head == NULL) return;
 
-// TODO: clear stack
+// DONE: clear stack
 	
-	for (; s.head != NULL; s.head = s.head->next) {
+	while(s.head != NULL) {
 		Element* e = s.head;	
 		s.head = s.head->next;
 		free(e);
