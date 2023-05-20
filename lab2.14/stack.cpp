@@ -44,7 +44,6 @@ void clear_stack(Stack& s, int& length) {
 		Element* e = s.head;	
 		s.head = s.head->next;
 		free(e);
-		if (s.head==NULL) break;
 	}
 
 	length = 0;

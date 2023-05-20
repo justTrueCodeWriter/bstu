@@ -57,8 +57,8 @@ void clear_queue(Queue& q, int& length) {
 		Element* e = q.head;	
 		q.head = q.head->next;
 		free(e);
-		if (q.head==NULL) break;
 	}
+	q.tail = NULL;
 
 	length = 0;
 }

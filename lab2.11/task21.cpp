@@ -47,16 +47,14 @@ int delete_second_from_first(char *str1, char *str2, char *strEdited) {
 	char tmpStr2[len2];
 	strncpy(tmpStr2, str2, len2);
 
-	char *getPosition = strcasestr(str1, tmpStr2);
-
-// конкатенация
+	char *getPosition = strstr(str1, tmpStr2);
+	
+	int n = getPosition-str1;
 
 	if (getPosition) {
-		for (char k = 0; k<len2; k++) {
-			*(getPosition+k)=' ';
-		}
-		strncpy(strEdited, str1, 5);
-		//strcat(strEdited, getPosition+len2);
+		strncpy(strEdited, str1, n);
+		getPosition += len2;
+		strcat(strEdited, getPosition);
 	}
 		
 	else
