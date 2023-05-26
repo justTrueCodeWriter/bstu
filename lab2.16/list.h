@@ -1,11 +1,28 @@
 #define SURNAME_BUFFER 15
+#define MARKS_SIZE 5
 
 struct Student {
 
 	char surname[SURNAME_BUFFER];
-	char year;
-	char group;
-	char marks[5];
+	int year;
+	int group;
+	int marks[MARKS_SIZE];
 	Student *next;
 
 };
+
+struct List {
+
+	Student* head = nullptr;
+	int size;
+
+};
+
+void push_front(List& list);
+void push_back(List& list);
+void push_position(int n, List& list);
+
+void fill_element(Student& e);
+void clear_list(List& list);
+
+void print_list(List& list);
