@@ -10,7 +10,7 @@ void fill_single_list(Student& head);
 void init_single_list(int n, Student& head) {
 
 	if (n > 0) {
-		head.next = (Student*)malloc(sizeof(Student)*n);
+		head.next = (Student*)malloc(sizeof(Student));
 
 		fill_single_list(head);
 
@@ -26,11 +26,10 @@ void fill_single_list(Student& head) {
 
 	fgets(head.surname, SURNAME_BUFFER, stdin);			
 
-	scanf("%i%i", &head.year, &head.group);	
+	scanf("%c%c", &head.year, &head.group);	
 
 	for (int i = 0; i < 5; i++) {
-		scanf("%i", &head.marks[i]);
+		scanf("%c", &head.marks[i]);
 	}
 
 }
-
