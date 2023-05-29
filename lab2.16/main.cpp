@@ -30,7 +30,7 @@ void list_operations() {
 	while (true) {
 		do {	
 			printf("Mode:\nPush front(1)\nPush back(2)\nPush position(3)\nPull front(4)\n\
-Pull back(5)\nPull position(6)\nLargest group(7)\nPrint list(8)\nClear list(9)\nExit(10)\n> "); scanf("%d", &userChoice);
+Pull back(5)\nPull position(6)\nAverage mark(7)\nLargest group(8)\nPrint list(9)\nClear list(10)\nExit(11)\n> "); scanf("%d", &userChoice);
 			switch (userChoice) {
 				case 1: push_front(list_field); break;
 				case 2: push_back(list_field); break;
@@ -46,115 +46,89 @@ Pull back(5)\nPull position(6)\nLargest group(7)\nPrint list(8)\nClear list(9)\n
 							printf("Position: "); scanf("%d", &n);
 							pull_position(n, list_field); 
 						} break;
-				case 7: check_largest_group(list_field); break;
-				case 8:	print_list(list_field); break; 
-				case 9: clear_list(list_field); break;
-				case 10: clear_list(list_field); return; break;
+				case 7: average_group_mark(list_field);  break;
+				case 8: check_largest_group(list_field); break;
+				case 9:	print_list(list_field); break; 
+				case 10: clear_list(list_field); break;
+				case 11: clear_list(list_field); return; break;
 				default: printf("Incorrect choice!\n");
 			}
-		}while((userChoice>=1)&&(userChoice<=10));
+		}while((userChoice>=1)&&(userChoice<=11));
 	}
 
 	
 
 }
 
-void average_group_mark() {
+int group_amount(List& list) {
 
-	int checkedYear[BUFFER];
-	int checkedGroup[BUFFER];
+	int groupsAmount = 0; 
+	int groupCopy = 0;
 
-}
+	for (Student * cur = list.head; cur != nullptr; cur = cur->next) {
+		groupsAmount++;
+	}
 
-void check_oldest_student(List& list) {
+	printf("groupsAmount %d\n", groupsAmount);
 
-
-
-}
-
-void check_youngest_student(List& list) {
-
-	int checkedYear[BUFFER];
-	int checkedGroup[BUFFER];
-	
-	//for (Student * cur = list.head; cur->next != nullptr; cur = cur->next)
-			
-}
-
-int checkedElements(List& list, int *checkedYear, int *checkedGroup) {
-	int checkedYearIndex=0, checkedGroupIndex=0, size = 0;
-
-	int countIn = 0;
-
-	for (Student * curMain = list.head; curMain != nullptr; curMain = curMain->next)	{
-			for (int i = 0; i < countIn+1; i++) {
-
-				printf("Correct checkedYear\n");
-				if ((curMain->year != checkedYear[checkedYearIndex])&&(curMain->group != checkedGroup[checkedGroupIndex])) {
-
-					printf("Correct if\n");
-					checkedYear[checkedYearIndex] = curMain->year;
-					checkedGroup[checkedGroupIndex] = curMain->group;
-
-					printf("%d|%d || %d|%d\n", curMain->year, checkedYear[checkedYearIndex], curMain->group, checkedGroup[checkedGroupIndex]);
-
-					checkedYearIndex++;
-					checkedGroupIndex++;
-					size++;
-
-				}
+	for (Student * mainCheck = list.head; mainCheck != nullptr; mainCheck = mainCheck->next) {
+		for (Student * curCheck = mainCheck->next; curCheck != nullptr; curCheck = curCheck->next)	{
+					
+			if ((mainCheck->year == curCheck->year)&&(mainCheck->group == curCheck->group))	{
+				groupsAmount--;
+				break;
 			}
-			countIn++;
+		}
+
 	}
 
-	for (int i = 0; i < size; i++) {
-		printf("%d ", checkedYear[i]);
-	}
+	return groupsAmount;
 
-	printf("\n");
+}
 
-	for (int i = 0; i < size; i++) {
-		printf("%d ", checkedGroup[i]);
-	}
+void average_group_mark(List& list) {
 
-	printf("\n");
+	int groupsAmount;
 
-	return size;
-	
+	groupsAmount = group_amount(list);
+
+	printf("Group amount = %d\n", groupsAmount);
+
+	float subjects[groupsAmount][MARKS_SIZE];
+
+	for (int i = 0; i < groupsAmount; i++) {
+		for (Student * curCheck = list.head; curCheck != nullptr; curCheck = curCheck->next)	{
+						
+			if ((checkedYear[i] == curCheck->year)&&(checkedGroup[i] == curCheck->group))	{
+				
+			}
+		}
+	}			
+		
+
 }
 
 void check_largest_group(List& list) {
 
-	int checkedYear[BUFFER];
-	int checkedGroup[BUFFER];
+	int groupSize = 0, largest = 0; 
+	int largestYear = 0, largestGroup = 0;
 
-	int checkedElemSize=0;
-
-	int groupSize=0, largest=0; 
-	int largestYear=0, largestGroup=0;
-
-	checkedElemSize = checkedElements(list, checkedYear, checkedGroup);
-
-	for (int i; i < checkedElemSize; i++) {
+	for (Student * mainCheck = list.head; mainCheck != nullptr; mainCheck = mainCheck->next) {
 		groupSize = 0;
 		for (Student * curCheck = list.head; curCheck != nullptr; curCheck = curCheck->next)	{
 					
-			printf("Correct curCheck\n");
-			if ((checkedYear[i] == curCheck->year)&&(checkedGroup[i] == curCheck->group))	{
+			if ((mainCheck->year == curCheck->year)&&(mainCheck->group == curCheck->group))	{
 				groupSize++;
 			}
 		}
-	
 		
 		if (groupSize > largest) {
-			printf("Correct if size\n");
 			largest = groupSize;	
-			largestYear = checkedYear[i];
-			largestGroup = checkedGroup[i];
-			printf("Correct if size write\n");
+			largestYear = mainCheck->year;
+			largestGroup = mainCheck->group;
 		}
 	}
 	//printf("largest=%d | checkedElemSize=%d\n", largest, checkedElemSize);
-	printf("Largest:%d\nYear: %d\nGroup: %d\n", largest, largestYear, largestGroup);
+	printf("Year: %d\nGroup: %d\n", largestYear, largestGroup);
 
 }

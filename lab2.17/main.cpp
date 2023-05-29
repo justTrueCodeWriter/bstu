@@ -43,15 +43,12 @@ void fill_ring_by_task(RingList& ring, int N) {
 
 	int i = N;
 
-	printf("Correct\n");	
-
 	push_next(ring, i);
 	for (Element * cur = ring.current; i-1 > 0; cur = cur->next) {
 		i--;
 		push_prev(ring, i);
 	}
 
-	printf("Correct\n");	
 }
 
 void task(RingList& ring) {
