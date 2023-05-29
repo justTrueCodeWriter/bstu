@@ -8,8 +8,8 @@ void list_operations();
 
 void average_group_mark(List& list);
 
-void check_oldest_student(List& list);
-void check_youngest_student(List& list);
+void check_oldest_students(List& list);
+void check_youngest_students(List& list);
 
 void check_largest_group(List& list);
 
@@ -30,7 +30,7 @@ void list_operations() {
 	while (true) {
 		do {	
 			printf("Mode:\nPush front(1)\nPush back(2)\nPush position(3)\nPull front(4)\n\
-Pull back(5)\nPull position(6)\nAverage mark(7)\nLargest group(8)\nPrint list(9)\nClear list(10)\nExit(11)\n> "); scanf("%d", &userChoice);
+Pull back(5)\nPull position(6)\nAverage mark(7)\nLargest group(8)\nOldest & youngest(9)\nPrint list(10)\nClear list(11)\nExit(12)\n> "); scanf("%d", &userChoice);
 			switch (userChoice) {
 				case 1: push_front(list_field); break;
 				case 2: push_back(list_field); break;
@@ -48,12 +48,15 @@ Pull back(5)\nPull position(6)\nAverage mark(7)\nLargest group(8)\nPrint list(9)
 						} break;
 				case 7: average_group_mark(list_field);  break;
 				case 8: check_largest_group(list_field); break;
-				case 9:	print_list(list_field); break; 
-				case 10: clear_list(list_field); break;
-				case 11: clear_list(list_field); return; break;
+				case 9: check_oldest_students(list_field); 
+						check_youngest_students(list_field);
+						break;
+				case 10:	print_list(list_field); break; 
+				case 11: clear_list(list_field); break;
+				case 12: clear_list(list_field); return; break;
 				default: printf("Incorrect choice!\n");
 			}
-		}while((userChoice>=1)&&(userChoice<=11));
+		}while((userChoice>=1)&&(userChoice<=12));
 	}
 
 	
@@ -86,6 +89,16 @@ int group_amount(List& list) {
 
 }
 
+void checkUnique(List& list, int *checkedYear, int *checkedGroup) {
+
+	for (Student * curMain = list.head; curMain != nullptr; curMain = curMain->next) {
+		for (Student * curCheck = list.head; curCheck != nullptr; curCheck = curCheck->next) {
+		
+		}
+	}
+
+}
+
 void average_group_mark(List& list) {
 
 	int groupsAmount;
@@ -94,17 +107,83 @@ void average_group_mark(List& list) {
 
 	printf("Group amount = %d\n", groupsAmount);
 
+	int checkedYear[groupsAmount];
+	int checkedGroup[groupsAmount];
 	float subjects[groupsAmount][MARKS_SIZE];
 
+	int j;
 	for (int i = 0; i < groupsAmount; i++) {
+		j = 0;
 		for (Student * curCheck = list.head; curCheck != nullptr; curCheck = curCheck->next)	{
 						
 			if ((checkedYear[i] == curCheck->year)&&(checkedGroup[i] == curCheck->group))	{
-				
+				subjects[i][j] = curCheck->marks[i];
 			}
+			j++;
 		}
+		//for (Student * curCheck)
 	}			
 		
+
+}
+
+void check_oldest_students(List& list) {
+
+	int oldest = 0; 
+
+	for (Student * mainCheck = list.head; mainCheck != nullptr; mainCheck = mainCheck->next) {
+		if (mainCheck->year > oldest) {
+			oldest = mainCheck->year;	
+		}
+	}
+
+	Student oldestStudents[BUFFER];
+	int i = 0, oldestCount = 0;
+	for (Student * cur = list.head; cur != nullptr; cur = cur->next) {
+	
+		if (cur->year == oldest) {
+			oldestStudents[i] = *cur;
+			oldestCount++;
+			i++;
+		}
+	}
+
+	printf("OLDEST:\n");
+
+	for (int j = 0; j<oldestCount; j++) {
+		printf("Surname: %s\nYear: %d\nGroup: %d\n", oldestStudents[j].surname, oldestStudents[j].year, oldestStudents[j].group);
+	}	
+	printf("\n");
+
+}
+
+void check_youngest_students(List& list) {
+
+	int youngest = 10; 
+
+	for (Student * mainCheck = list.head; mainCheck != nullptr; mainCheck = mainCheck->next) {
+		if (mainCheck->year < youngest) {
+			youngest = mainCheck->year;	
+		}
+	}
+
+	Student youngestStudents[BUFFER];
+	int i = 0, youngestCount = 0;
+	for (Student * cur = list.head; cur != nullptr; cur = cur->next) {
+	
+		if (cur->year == youngest) {
+			youngestStudents[i] = *cur;
+			youngestCount++;
+			i++;
+		}
+	}
+
+	printf("YOUNGEST:\n");
+
+	for (int j = 0; j<youngestCount; j++) {
+		printf("Surname: %s\nYear: %d\nGroup: %d\n", youngestStudents[j].surname, youngestStudents[j].year, youngestStudents[j].group);
+	}
+	printf("\n");
 
 }
 
