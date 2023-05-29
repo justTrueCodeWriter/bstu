@@ -41,13 +41,17 @@ int main() {
 
 void fill_ring_by_task(RingList& ring, int N) {
 
-	int i = 1;
-	push_prev(ring, i);
-	for (Element * cur = ring.current; i-1 < N; cur = cur->next) {
-		i++;
+	int i = N;
+
+	printf("Correct\n");	
+
+	push_next(ring, i);
+	for (Element * cur = ring.current; i-1 > 0; cur = cur->next) {
+		i--;
 		push_prev(ring, i);
 	}
 
+	printf("Correct\n");	
 }
 
 void task(RingList& ring) {
@@ -64,14 +68,14 @@ void task(RingList& ring) {
 	print_ring(ring);
 
 	int i = 0, j = 0, step = 0;
-	for (Element *cur = ring.current->next; i < N; cur = cur->next) {
+	for (int i = 0; i < N; i++) {
+		go_prev(ring);
 		if (step == k) {
 			step = 0;
 			//arr[j] = cur->data;
 			arr[j] = pull(ring);
 			j++;
 		}	
-		i++;	
 		step++;
 	}
 	

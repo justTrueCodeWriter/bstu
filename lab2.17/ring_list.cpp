@@ -85,10 +85,10 @@ void print_ring(RingList ring) {
 		return;
 	}
 
-	printf("%i ", ring.current->data);
+	printf("%i", ring.current->data);
 
 	for (Element *cur = ring.current->next; cur != ring.current; cur = cur->next) {
-		printf("<-> %i", cur->data);
+		printf(" <-> %i", cur->data);
 	}
 
 	printf("\n");
