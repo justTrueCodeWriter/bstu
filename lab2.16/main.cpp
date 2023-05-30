@@ -89,11 +89,20 @@ int group_amount(List& list) {
 
 }
 
-void checkUnique(List& list, int *checkedYear, int *checkedGroup) {
+void checkUnique(List& list, int *checkedYear, int *checkedGroup, int groupsAmount) {
 
+	int j = 0, inCount = 0;
 	for (Student * curMain = list.head; curMain != nullptr; curMain = curMain->next) {
-		for (Student * curCheck = list.head; curCheck != nullptr; curCheck = curCheck->next) {
-		
+		for (int i = 0; i < groupsAmount; i++) {
+			if ((curMain->year == checkedYear[i])&&(curMain->group == checkedGroup[i])) {
+				j++;
+				break;	
+			}
+			if ((curMain->year != checkedYear[i])&&(curMain->group != checkedGroup[i])) {
+				checkedYear[j] = curMain->year;
+				checkedGroup[j] = curMain->group;
+				j = 0;
+			}
 		}
 	}
 
@@ -109,6 +118,14 @@ void average_group_mark(List& list) {
 
 	int checkedYear[groupsAmount];
 	int checkedGroup[groupsAmount];
+
+	checkUnique(list, checkedYear, checkedGroup, groupsAmount);
+
+	printf("Unique\n");
+
+	for (int i = 0; i < groupsAmount; i++)
+		printf("Year = %d, group = %d\n", checkedYear[i], checkedGroup[i]);
+
 	float subjects[groupsAmount][MARKS_SIZE];
 
 	int j;
