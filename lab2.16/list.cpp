@@ -141,9 +141,8 @@ void fill_element(Student& e) {
 	printf("Year, Group: "); scanf("%d%d", &e.year, &e.group);	
 
 	printf("Marks: ");
-	for (int i = 0; i < MARKS_SIZE; i++) {
-		scanf("%d", &e.marks[i]);
-	}
+	scanf("%d", &e.mark);
+	
 
 }
 
@@ -159,9 +158,7 @@ void print_list(List& list) {
 			printf("Group: %i\n", cur->group);	
 
 			printf("Marks: ");
-			for (int i = 0; i < MARKS_SIZE; i++) 
-				printf("%d ", cur->marks[i]);
-			printf("\n\n");
+			printf("%d ", cur->mark);
 		}
 
 		printf("------------------------------------------------\n");

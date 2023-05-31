@@ -6,7 +6,7 @@ struct Student {
 	char surname[SURNAME_BUFFER];
 	int year;
 	int group;
-	int marks[MARKS_SIZE];
+	int mark;
 	Student *next;
 
 };

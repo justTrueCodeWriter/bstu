@@ -89,21 +89,36 @@ int group_amount(List& list) {
 
 }
 
-void checkUnique(List& list, int *checkedYear, int *checkedGroup, int groupsAmount) {
+void checkMaxYear(List& list, int &maxYear, int &maxGroup) {
 
-	int j = 0, inCount = 0;
-	for (Student * curMain = list.head; curMain != nullptr; curMain = curMain->next) {
-		for (int i = 0; i < groupsAmount; i++) {
-			if ((curMain->year == checkedYear[i])&&(curMain->group == checkedGroup[i])) {
-				j++;
-				break;	
-			}
-			if ((curMain->year != checkedYear[i])&&(curMain->group != checkedGroup[i])) {
-				checkedYear[j] = curMain->year;
-				checkedGroup[j] = curMain->group;
-				j = 0;
-			}
+		
+	for (Student * mainCheck = list.head; mainCheck != nullptr; mainCheck = mainCheck->next) {
+		if (mainCheck->year > maxYear)		
+			maxYear = mainCheck->year;
+		if (mainCheck->group > maxGroup)
+			maxGroup = mainCheck->group;
+	}
+
+}
+
+void fill_arr_marks(float **marksMatrix, int maxYear, int maxGroup) {
+
+	for (int i = 0; i < maxYear; i++) {
+		for (int j = 0; j < maxGroup; j++) {
+			marksMatrix[i][j] = 0;
 		}
+
+	}
+
+}
+
+void fill_students_count(int **studentsCount, int maxYear, int maxGroup) {
+
+	for (int i = 0; i < maxYear; i++) {
+		for (int j = 0; j < maxGroup; j++) {
+			studentsCount[i][j] = 0;
+		}
+
 	}
 
 }
@@ -116,31 +131,25 @@ void average_group_mark(List& list) {
 
 	printf("Group amount = %d\n", groupsAmount);
 
-	int checkedYear[groupsAmount];
-	int checkedGroup[groupsAmount];
+	int maxYear = 0, maxGroup = 0;
+	checkMaxYear(list, maxYear, maxGroup);
 
-	checkUnique(list, checkedYear, checkedGroup, groupsAmount);
+	float marksMatrix[maxYear][maxGroup];
+	int studentsCount[maxYear][maxGroup];
+	fill_arr_marks((float**)marksMatrix, maxYear, maxGroup);
+	fill_students_count((int**)studentsCount, maxYear, maxGroup);
 
-	printf("Unique\n");
+	for (Student * mainCheck = list.head; mainCheck != nullptr; mainCheck = mainCheck->next) {
+			marksMatrix[mainCheck->year][mainCheck->group] += mainCheck->mark;
+					studentsCount[mainCheck->year][mainCheck->group]++;
+	}
 
-	for (int i = 0; i < groupsAmount; i++)
-		printf("Year = %d, group = %d\n", checkedYear[i], checkedGroup[i]);
-
-	float subjects[groupsAmount][MARKS_SIZE];
-
-	int j;
-	for (int i = 0; i < groupsAmount; i++) {
-		j = 0;
-		for (Student * curCheck = list.head; curCheck != nullptr; curCheck = curCheck->next)	{
-						
-			if ((checkedYear[i] == curCheck->year)&&(checkedGroup[i] == curCheck->group))	{
-				subjects[i][j] = curCheck->marks[i];
-			}
-			j++;
+	for (int i = 0; i < maxYear; i++) {
+		for (int j = 0; j < maxGroup; j++) {
+			if (marksMatrix[i][j] != 0)
+				printf("%f", marksMatrix[i][j]/studentsCount[i][j]);
 		}
-		//for (Student * curCheck)
-	}			
-		
+	}
 
 }
 

@@ -3,6 +3,7 @@
 удаления ребят из круга.*/
 
 #include <stdio.h>
+#include <malloc.h>
 #include "ring_list.h"
 
 void task(RingList& ring);
@@ -91,3 +92,31 @@ void task(RingList& ring) {
 	clear_ring(ring);
 
 }
+
+void task2(RingList& ring) {
+
+	int k = 0;
+
+	printf("k = "); scanf("%d", &k);
+
+	int i = 1;
+	for (Element * cur = ring.current->next; cur != ring.current; cur = cur->next, i++) {
+	
+		if (i == k) {
+			Element * e = cur;
+			cur->prev->next = cur->next;
+			cur->next->prev = cur->prev;
+			cur = cur->next;
+			free(e);
+			break;
+		}
+	
+	}
+
+	
+
+		
+
+}
+
+// TODO: функция удаления катого от текущего
